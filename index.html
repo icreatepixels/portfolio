@@ -216,7 +216,8 @@
                 <div className="absolute top-32 right-10 w-2 h-2 bg-red-600 rounded-full animate-pulse shadow-[0_0_10px_red]"></div>
 
                 <div className="relative z-10 text-center max-w-4xl space-y-6">
-                  <div className={`transition-all duration-1000 delay-300 ${heroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                  {/* Updated Text Animation: Disappears downward on scroll */}
+                  <div className={`transition-all duration-1000 delay-300 ${heroLoaded && !scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
                     <p className="text-amber-500 tracking-[0.3em] text-sm md:text-base uppercase font-medium">Filmmaker • Editor • Creative Head</p>
                   </div>
                   
@@ -472,42 +473,48 @@
                         title: "Wedding Portraits", 
                         desc: "Cinematic Wedding Moments.", 
                         icon: Heart,
-                        link: "https://drive.google.com/drive/folders/1v8A-B6aTO1UKHWEAKMTM6QwjozPStGv5?usp=drive_link"
+                        link: "https://drive.google.com/drive/folders/1v8A-B6aTO1UKHWEAKMTM6QwjozPStGv5?usp=drive_link",
+                        image: "https://github.com/icreatepixels/portfolio/blob/4545783312a66d390b26eb5eb47b751d959b5a67/Assets/image3.jpg?raw=true"
                       },
                       { 
                         type: "Brand Film", 
                         title: "Gentleren", 
                         desc: "Exhibition content & visual identity.", 
-                        icon: Film,
-                        link: "https://drive.google.com/drive/folders/1UW-mGI5o2-FlWlr4wkqWZGkuhv1gOSeV?usp=drive_link"
+                        icon: Film, 
+                        link: "https://drive.google.com/drive/folders/1UW-mGI5o2-FlWlr4wkqWZGkuhv1gOSeV?usp=drive_link",
+                        image: "https://github.com/icreatepixels/portfolio/blob/4545783312a66d390b26eb5eb47b751d959b5a67/Assets/image5.jpg?raw=true"
                       },
                       { 
                         type: "Travel Vlog", 
                         title: "Shivaji Maharaj Festival", 
                         desc: "Dadar Vlog Experience.", 
-                        icon: MapPin,
-                        link: "https://youtu.be/73OewayWrQQ?si=LS9SpD98NuLMo09M"
+                        icon: MapPin, 
+                        link: "https://youtu.be/73OewayWrQQ?si=LS9SpD98NuLMo09M",
+                        image: "https://github.com/icreatepixels/portfolio/blob/4545783312a66d390b26eb5eb47b751d959b5a67/Assets/image%204.jpg?raw=true"
                       },
                       { 
                         type: "Music Video", 
                         title: "Din Din Din", 
                         desc: "Diwali Song Project.", 
-                        icon: Award,
-                        link: "https://www.youtube.com/watch?v=mtdVqpPFJkk"
+                        icon: Award, 
+                        link: "https://www.youtube.com/watch?v=mtdVqpPFJkk",
+                        image: "https://github.com/icreatepixels/portfolio/blob/ebf80f3dc3bababfcaf210d2df8dffb610a3b4c6/image2.jpg?raw=true" 
                       },
                       { 
                         type: "Commercial", 
                         title: "Luxe Brow Clinic", 
                         desc: "Brand Visual Content.", 
-                        icon: Film,
-                        link: "https://www.instagram.com/luxe_brow_clinic/" 
+                        icon: Film, 
+                        link: "https://www.instagram.com/luxe_brow_clinic/",
+                        image: "https://github.com/icreatepixels/portfolio/blob/937d72f4266efa9fbcdc09bb93f5f8f4efbfff85/Assets/image6.jpg?raw=true"
                       },
                       { 
                         type: "Social Media Growth", 
                         title: "Puppycuddles Dog Café", 
                         desc: "Content Creation & Strategy.", 
                         icon: Instagram, 
-                        link: "https://www.instagram.com/puppycuddles_mumbai/" 
+                        link: "https://www.instagram.com/puppycuddles_mumbai/",
+                        image: "https://github.com/icreatepixels/portfolio/blob/a18c1085f77a872d3c53de4f7e84d387262d6d23/Assets/image7.jpg?raw=true"
                       }
                     ].map((project, i) => (
                       <RevealOnScroll key={i} delay={i * 100}>
@@ -517,9 +524,23 @@
                           rel={project.link ? "noopener noreferrer" : undefined}
                           className={`block group relative aspect-[9/16] md:aspect-video bg-neutral-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-[0_0_30px_rgba(245,158,11,0.1)] transition-all duration-500 ${project.link ? 'cursor-pointer' : 'cursor-default'}`}
                         >
-                          <div className="absolute inset-0 bg-neutral-700 flex items-center justify-center group-hover:bg-neutral-600 transition-colors duration-700">
-                             <project.icon className="text-neutral-500 w-16 h-16 group-hover:scale-110 group-hover:text-amber-500/50 transition-all duration-500" />
-                          </div>
+                          {/* Render Image if available, else render Icon placeholder */}
+                          {project.image ? (
+                            <div className="absolute inset-0">
+                                <img 
+                                  src={project.image} 
+                                  alt={project.title} 
+                                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                {/* Dark overlay for text readability */}
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                            </div>
+                          ) : (
+                            <div className="absolute inset-0 bg-neutral-700 flex items-center justify-center group-hover:bg-neutral-600 transition-colors duration-700">
+                               <project.icon className="text-neutral-500 w-16 h-16 group-hover:scale-110 group-hover:text-amber-500/50 transition-all duration-500" />
+                            </div>
+                          )}
+                          
                           {/* Fake Image Overlay Effect */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
                           
